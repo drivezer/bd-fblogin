@@ -16,7 +16,7 @@ class Register extends Component {
         this.handleClicked = this.handleClicked.bind(this);
     }
 
-    _baseURL = 'https://wassanadee:3000';
+    _baseURL = 'https://wassanadee.ml:3000';
 
     handleChang = (e) => {
         this.setState({

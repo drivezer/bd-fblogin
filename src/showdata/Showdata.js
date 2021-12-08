@@ -21,8 +21,8 @@ export default class Showdata extends Component{
         //console.log("hello show data");
     }
 
-    _baseURL = 'https://wassanadee:3000';
-    
+    _baseURL = 'https://wassanadee.ml:3000';
+
     componentDidMount() {
         //console.log("before get data");
         this.getData();
