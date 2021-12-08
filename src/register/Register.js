@@ -15,13 +15,16 @@ class Register extends Component {
         this.handleChang = this.handleChang.bind(this);
         this.handleClicked = this.handleClicked.bind(this);
     }
+
+    _baseURL = 'https://wassanadee:3000';
+
     handleChang = (e) => {
         this.setState({
             [e.target.id]: e.target.value
         });
     }
     handleClicked(){
-        let url = `https://localhost:3000/data`;
+        let url = `${this._baseURL}/data`;
         let data = {
             user_id: this.state.user_id,
             user_firstname: this.state.user_firstname,
