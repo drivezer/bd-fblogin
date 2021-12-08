@@ -20,6 +20,9 @@ export default class Showdata extends Component{
         this.handleClicked = this.handleClicked.bind(this);
         //console.log("hello show data");
     }
+
+    _baseURL = 'https://wassanadee:3000';
+    
     componentDidMount() {
         //console.log("before get data");
         this.getData();
@@ -36,7 +39,7 @@ export default class Showdata extends Component{
     onDelete=(user)=>{
         const result = window.confirm(`จะลบข้อมูล ${user.user_firstname} ${user.user_lastname} ใช่หรือไม่?`);
         if (result) {
-            let url = `https://localhost:3000/delete`;
+            let url = `${this._baseURL}/delete`;
             let data = {
                 user_id: user.user_id
             };
@@ -82,7 +85,7 @@ export default class Showdata extends Component{
     }
 
     handleClicked(){
-        let url = `https://localhost:3000/data`;
+        let url = `${this._baseURL}/data`;
         let data = {
             user_id: this.state.user_id,
             user_firstname: this.state.user_firstname,
