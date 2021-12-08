@@ -8,6 +8,7 @@ import Register from "../register/Register";
 import Showdata from "../showdata/Showdata";
 
 export default class Facebook extends Component {
+
   state = {
     isLoggedIn: false,
     userID: "",
@@ -15,6 +16,22 @@ export default class Facebook extends Component {
     email: "",
     picture: ""
   };
+
+  constructor() {
+    super();
+    if (localStorage.hasOwnProperty('remember')) {
+      const res = JSON.parse(localStorage.getItem('remember'));
+      this.state = {
+        isLoggedIn: res.isLoggedIn,
+        userID: res.userID,
+        name: res.name,
+        email: res.email,
+        picture: res.picture
+      };
+    }
+  }
+
+  
   responseFacebook = response => {
     // console.log(response);
 
@@ -25,6 +42,14 @@ export default class Facebook extends Component {
       email: response.email,
       picture: response.picture.data.url
     });
+
+    localStorage.setItem('remember', JSON.stringify({
+      isLoggedIn: true, 
+      userID: response.userID, 
+      name: response.name, 
+      email: response.email, 
+      picture: response.picture.data.url
+    }));
   };
 
   componentClicked = () => console.log("clicked");
@@ -37,6 +62,8 @@ export default class Facebook extends Component {
       email: '',
       picture: ''
     });
+
+    localStorage.removeItem('remember');
   }
 
   render() {
@@ -79,7 +106,7 @@ export default class Facebook extends Component {
           }}
         >
           <FacebookLogin
-            appId="639373010269446"
+            appId="271771708242435"
             autoLoad={false}
             fields="name,email,picture"
             onClick={this.componentClicked}

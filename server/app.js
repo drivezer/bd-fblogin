@@ -8,8 +8,8 @@ var fs = require('fs');
 var http = require('http');
 var https = require('https');
 //var privateKey  = fs.readFileSync(path.resolve('server/key.pem', 'utf8'));
-var privateKey  = fs.readFileSync('server/key.pem', 'utf8');
-var certificate = fs.readFileSync('server/cert.pem', 'utf8');
+var privateKey  = fs.readFileSync('server.key', 'utf8');
+var certificate = fs.readFileSync('server.crt', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 const app = express();
 
@@ -19,10 +19,10 @@ app.use(body());
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 const db = mysql.createConnection({
-    host: '172.24.32.1',
-    user: 'bonn',
-    password: '1234',
-    database: 'testing'
+    host: '192.168.1.39',
+    user: 'drivezer',
+    password: '123456',
+    database: 'bd_drive'
 });
 // show data
 app.get('/data', function(req,res){
@@ -38,8 +38,8 @@ app.get('/data', function(req,res){
 
 //delete
 app.put('/delete', function(req, res) {
-    var sql = 'DELETE FROM users WHERE id = ?';
-    db.query(sql,[req.body.idkey],function (error, results) {
+    var sql = 'DELETE FROM users WHERE user_id = ?';
+    db.query(sql,[req.body.user_id],function (error, results) {
         if(error) throw error;
         res.send(JSON.stringify(results));
     });
@@ -47,8 +47,14 @@ app.put('/delete', function(req, res) {
 
 //edit
 app.put('/data', function(req, res) {
-    var sql = 'UPDATE users SET firstname= ? , lastname = ? WHERE id = ?';
-    db.query(sql,[req.body.firstname,req.body.lastname,req.body.idkey],function (error, results) {
+    var sql = 'UPDATE users SET user_firstname = ? , user_lastname = ?, user_email = ?, user_phone = ? WHERE user_id = ?';
+    db.query(sql,[
+        req.body.user_firstname,
+        req.body.user_lastname,
+        req.body.user_email,
+        req.body.user_phone,
+        req.body.user_id
+    ],function (error, results) {
         if(error) throw error;
         res.send(JSON.stringify(results));
     });
@@ -58,9 +64,11 @@ app.put('/data', function(req, res) {
 app.post('/data', function(req, res){
     console.log(req.body);
     let data = {
-        id:req.body.idkey,
-        firstname:req.body.firstname,
-        lastname:req.body.lastname
+        // id:req.body.user_id,
+        user_firstname: req.body.user_firstname,
+        user_lastname: req.body.user_lastname,
+        user_email: req.body.user_email,
+        user_phone: req.body.user_phone
     };
     let sql = 'INSERT INTO users SET ?';
     db.query(sql, data, (err, result)=>{
