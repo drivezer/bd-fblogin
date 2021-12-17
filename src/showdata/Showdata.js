@@ -2,8 +2,6 @@ import React, {Component} from "react";
 import axios from "axios";
 import Modal from 'react-awesome-modal';
 import './Showdata.css';
-//import '../../server/app';
-import {ip,port} from "../setIP/setting";
 
 export default class Showdata extends Component{
     constructor() {
@@ -21,7 +19,7 @@ export default class Showdata extends Component{
         //console.log("hello show data");
     }
 
-    _baseURL = 'https://wassanadee.ml:3000';
+    _baseURL = '';
 
     componentDidMount() {
         //console.log("before get data");
