@@ -10,7 +10,8 @@ class Register extends Component {
             user_firstname: "",
             user_lastname: "",
             user_email: "",
-            user_phone: ""
+            user_phone: "",
+            user_created_by: ""
         }
         this.handleChang = this.handleChang.bind(this);
         this.handleClicked = this.handleClicked.bind(this);
@@ -24,13 +25,16 @@ class Register extends Component {
         });
     }
     handleClicked(){
+        const resLocalStorage = JSON.parse(localStorage.getItem('remember'));
+
         let url = `${this._baseURL}/data`;
         let data = {
             user_id: this.state.user_id,
             user_firstname: this.state.user_firstname,
             user_lastname: this.state.user_lastname,
             user_email: this.state.user_email,
-            user_phone: this.state.user_phone
+            user_phone: this.state.user_phone,
+            user_created_by: resLocalStorage.email,
         }
         axios.post(url, data);
         this.setState({
@@ -38,7 +42,8 @@ class Register extends Component {
             user_firstname: "",
             user_lastname: "",
             user_email: "",
-            user_phone: ""
+            user_phone: "",
+            user_created_by: "",
         });
         this.props.history.push('/Showdata');
     }

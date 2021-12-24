@@ -63,14 +63,13 @@ app.put('/data', function(req, res) {
 //insert
 app.post('/data', function(req, res){
     console.log(req.body);
-    const resRemember = JSON.parse(localStorage.getItem('remember'));
     let data = {
         // id:req.body.user_id,
         user_firstname: req.body.user_firstname,
         user_lastname: req.body.user_lastname,
         user_email: req.body.user_email,
         user_phone: req.body.user_phone,
-        user_created_by: resRemember.email
+        user_created_by: req.body.user_created_by
     };
     let sql = 'INSERT INTO users SET ?';
     db.query(sql, data, (err, result)=>{
