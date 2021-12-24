@@ -183,10 +183,10 @@ export default class Showdata extends Component{
                                                             <input type="text" className="form-control" id="user_phone" onChange={this.handleChang} value={this.state.user_phone}/>
                                                         </div>
                                                         <div className="form-group">
-                                                            <h3><label htmlFor="id">Create By: {this.state.user_created_by}<br/></label></h3>
+                                                            <label htmlFor="id">Create By: {this.state.user_created_by}<br/></label>
                                                         </div>
                                                         <div className="form-group">
-                                                            <h3><label htmlFor="id">Last Update: {this.getDateTimeFormatted(this.state.updated_at)}<br/></label></h3>
+                                                            <label htmlFor="id">Last Update: {this.getDateTimeFormatted(this.state.updated_at)}<br/></label>
                                                         </div>
                                                         <button type="button" className="btn btn-primary" onClick={this.handleClicked}>Submit</button>
                                                     </form>
