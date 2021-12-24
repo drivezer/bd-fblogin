@@ -12,7 +12,9 @@ export default class Showdata extends Component{
             user_firstname: "",
             user_lastname: "",
             user_email: "",
-            user_phone: ""
+            user_phone: "",
+            user_created_by: "",
+            updated_at: "",
         }
         this.handleChang = this.handleChang.bind(this);
         this.handleClicked = this.handleClicked.bind(this);
@@ -64,7 +66,9 @@ export default class Showdata extends Component{
             user_firstname: user.user_firstname,
             user_lastname: user.user_lastname,
             user_email: user.user_email,
-            user_phone: user.user_phone
+            user_phone: user.user_phone,
+            user_created_by: user.user_created_by,
+            updated_at: user.updated_at,
         })
     }
     handleChang = (e) => {
@@ -82,6 +86,20 @@ export default class Showdata extends Component{
         // axios.put(url,data)
     }
 
+    getDateTimeFormatted = (data) => {
+        const date = new Date(data);
+        const resultDate = date.toLocaleDateString('th-TH', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
+        const resultTime = date.toLocaleTimeString('th-TH', {
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+        return `${resultDate} ${resultTime}`;
+    }
+
     handleClicked(){
         let url = `${this._baseURL}/data`;
         let data = {
@@ -97,7 +115,9 @@ export default class Showdata extends Component{
             user_firstname: "",
             user_lastname: "",
             user_email: "",
-            user_phone: ""
+            user_phone: "",
+            user_created_by: "",
+            updated_at: "",
         });
 	this.closeModal();
         setTimeout(()=>{this.componentDidMount()},1)
@@ -118,6 +138,8 @@ export default class Showdata extends Component{
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Phone Number</th>
+                            <th>Create By</th>
+                            <th>Last Update</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -129,6 +151,8 @@ export default class Showdata extends Component{
                                             <td>{user.user_lastname}</td>
                                             <td>{user.user_email}</td>
                                             <td>{user.user_phone}</td>
+                                            <td>{user.user_created_by}</td>
+                                            <td>{this.getDateTimeFormatted(user.updated_at)}</td>
                                             <td><button type="button" class="btn btn-warning" onClick={()=>this.call(user)}>Edit</button></td>
                                             <td><button type="button" class="btn btn-danger"  onClick={()=>this.onDelete(user)}>Delete</button></td>
                                             <div className="box">
@@ -157,6 +181,12 @@ export default class Showdata extends Component{
                                                         <div className="form-group">
                                                             <label>Phone Number:</label>
                                                             <input type="text" className="form-control" id="user_phone" onChange={this.handleChang} value={this.state.user_phone}/>
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <h3><label htmlFor="id">Create By: {this.state.user_created_by}<br/></label></h3>
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <h3><label htmlFor="id">Last Update: {this.getDateTimeFormatted(this.state.updated_at)}<br/></label></h3>
                                                         </div>
                                                         <button type="button" className="btn btn-primary" onClick={this.handleClicked}>Submit</button>
                                                     </form>

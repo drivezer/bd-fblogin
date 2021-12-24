@@ -8,8 +8,8 @@ var fs = require('fs');
 var http = require('http');
 var https = require('https');
 //var privateKey  = fs.readFileSync(path.resolve('server/key.pem', 'utf8'));
-var privateKey  = fs.readFileSync('server.key', 'utf8');
-var certificate = fs.readFileSync('server.crt', 'utf8');
+var privateKey  = fs.readFileSync('/etc/letsencrypt/live/wassanadee.ddns.net/privkey.pem', 'utf8');
+var certificate = fs.readFileSync('/etc/letsencrypt/live/wassanadee.ddns.net/fullchain.pem', 'utf8');
 var credentials = {key: privateKey, cert: certificate};
 const app = express();
 
@@ -63,12 +63,14 @@ app.put('/data', function(req, res) {
 //insert
 app.post('/data', function(req, res){
     console.log(req.body);
+    const resRemember = JSON.parse(localStorage.getItem('remember'));
     let data = {
         // id:req.body.user_id,
         user_firstname: req.body.user_firstname,
         user_lastname: req.body.user_lastname,
         user_email: req.body.user_email,
-        user_phone: req.body.user_phone
+        user_phone: req.body.user_phone,
+        user_created_by: resRemember.email
     };
     let sql = 'INSERT INTO users SET ?';
     db.query(sql, data, (err, result)=>{
